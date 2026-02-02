@@ -36,7 +36,7 @@ const pricingPlans = [
       'Hot card recommendations',
     ],
     priceId: 'price_tips_monthly',
-    popular: true,
+    popular: false,
   },
   {
     id: 'ai-agent',
