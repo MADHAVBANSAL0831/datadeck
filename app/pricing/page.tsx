@@ -59,6 +59,26 @@ const pricingPlans = [
     popular: false,
   },
   {
+    id: 'trial',
+    name: 'Early Access Trial',
+    price: 50,
+    period: '3 months',
+    description: 'Try premium features risk-free',
+    features: [
+      'Full AI Agent access for 3 months',
+      'All premium features included',
+      'AI-powered Q&A agent',
+      'Natural language card searches',
+      'Advanced analytics dashboard',
+      'Priority email support',
+      'No long-term commitment',
+      'Cancel anytime',
+    ],
+    priceId: 'price_trial_3months',
+    popular: false,
+    badge: 'Trial',
+  },
+  {
     id: 'early-bird',
     name: 'Early Bird',
     price: 200,
@@ -125,7 +145,7 @@ export default function PricingPage() {
         </div>
 
         {/* Pricing Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
           {pricingPlans.map((plan) => (
             <PricingCard
               key={plan.id}

@@ -20,6 +20,10 @@ const priceMapping: Record<string, { priceId: string; mode: 'subscription' | 'pa
     priceId: process.env.STRIPE_PRICE_AI_AGENT || 'price_ai_agent_monthly',
     mode: 'subscription',
   },
+  'price_trial_3months': {
+    priceId: process.env.STRIPE_PRICE_TRIAL || 'price_trial_3months',
+    mode: 'payment', // One-time payment for 3-month trial
+  },
   'price_early_bird_yearly': {
     priceId: process.env.STRIPE_PRICE_EARLY_BIRD || 'price_early_bird_yearly',
     mode: 'payment', // One-time payment for early bird
