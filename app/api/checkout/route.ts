@@ -51,8 +51,10 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Get the base URL for redirects
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'
+    // Get the base URL for redirects from request headers or env
+    const host = request.headers.get('host') || 'localhost:3005'
+    const protocol = host.includes('localhost') ? 'http' : 'https'
+    const baseUrl = `${protocol}://${host}`
 
     // Create Stripe checkout session
     const session = await stripe.checkout.sessions.create({
