@@ -1,10 +1,31 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { createClient } from '@/lib/supabase/client'
+import { User } from '@supabase/supabase-js'
+import UserMenu from './UserMenu'
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [user, setUser] = useState<User | null>(null)
+  const supabase = createClient()
+
+  useEffect(() => {
+    // Get initial user
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      setUser(user)
+    })
+
+    // Listen for auth changes
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null)
+    })
+
+    return () => subscription.unsubscribe()
+  }, [])
 
   return (
     <header className="sticky top-0 z-50 bg-slate-950/90 backdrop-blur-lg border-b border-teal-500/20">
@@ -28,9 +49,21 @@ export default function Header() {
             <Link href="#features" className="text-white/70 hover:text-teal-400 transition-colors">
               Features
             </Link>
-            <Link href="/pricing" className="px-6 py-2.5 bg-gradient-to-r from-teal-600 to-teal-500 text-white font-semibold rounded-lg hover:from-teal-500 hover:to-teal-400 transition-all shadow-lg shadow-teal-500/25">
-              View Pricing
+            <Link href="/pricing" className="text-white/70 hover:text-teal-400 transition-colors">
+              Pricing
             </Link>
+            {user ? (
+              <UserMenu user={user} />
+            ) : (
+              <>
+                <Link href="/login" className="text-white/70 hover:text-teal-400 transition-colors">
+                  Login
+                </Link>
+                <Link href="/signup" className="px-6 py-2.5 bg-gradient-to-r from-teal-600 to-teal-500 text-white font-semibold rounded-lg hover:from-teal-500 hover:to-teal-400 transition-all shadow-lg shadow-teal-500/25">
+                  Sign Up
+                </Link>
+              </>
+            )}
           </nav>
 
           {/* Mobile Menu Button */}
@@ -57,9 +90,41 @@ export default function Header() {
             <Link href="#features" className="block text-white/70 hover:text-teal-400 transition-colors">
               Features
             </Link>
-            <Link href="/pricing" className="block px-6 py-2.5 bg-gradient-to-r from-teal-600 to-teal-500 text-white font-semibold rounded-lg text-center">
-              View Pricing
+            <Link href="/pricing" className="block text-white/70 hover:text-teal-400 transition-colors">
+              Pricing
             </Link>
+            {user ? (
+              <>
+                <Link href="/dashboard" className="block text-white/70 hover:text-teal-400 transition-colors" onClick={() => setIsMenuOpen(false)}>
+                  Dashboard
+                </Link>
+                <Link href="/payment-history" className="block text-white/70 hover:text-teal-400 transition-colors" onClick={() => setIsMenuOpen(false)}>
+                  Payment History
+                </Link>
+                <div className="pt-2 border-t border-white/10">
+                  <p className="text-xs text-white/40 mb-2 px-1">Signed in as</p>
+                  <p className="text-sm text-white font-medium mb-3 px-1 truncate">{user.email}</p>
+                  <button
+                    onClick={async () => {
+                      await supabase.auth.signOut()
+                      window.location.href = '/login'
+                    }}
+                    className="w-full px-6 py-2.5 bg-red-500/10 border border-red-500/30 text-red-400 font-semibold rounded-lg text-center hover:bg-red-500/20 transition-all"
+                  >
+                    Logout
+                  </button>
+                </div>
+              </>
+            ) : (
+              <>
+                <Link href="/login" className="block text-white/70 hover:text-teal-400 transition-colors">
+                  Login
+                </Link>
+                <Link href="/signup" className="block px-6 py-2.5 bg-gradient-to-r from-teal-600 to-teal-500 text-white font-semibold rounded-lg text-center hover:from-teal-500 hover:to-teal-400 transition-all">
+                  Sign Up
+                </Link>
+              </>
+            )}
           </nav>
         )}
       </div>

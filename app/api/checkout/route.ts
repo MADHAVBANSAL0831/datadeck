@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
+import { createClient } from '@/lib/supabase/server'
 
 // Initialize Stripe with your secret key
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
@@ -43,7 +44,7 @@ export async function POST(request: NextRequest) {
     }
 
     const priceConfig = priceMapping[priceId]
-    
+
     if (!priceConfig) {
       return NextResponse.json(
         { error: 'Invalid price ID' },
@@ -51,13 +52,19 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // Get authenticated user
+    const supabase = await createClient()
+    const {
+      data: { user },
+    } = await supabase.auth.getUser()
+
     // Get the base URL for redirects from request headers or env
     const host = request.headers.get('host') || 'localhost:3005'
     const protocol = host.includes('localhost') ? 'http' : 'https'
     const baseUrl = `${protocol}://${host}`
 
     // Create Stripe checkout session
-    const session = await stripe.checkout.sessions.create({
+    const sessionConfig: Stripe.Checkout.SessionCreateParams = {
       payment_method_types: ['card'],
       line_items: [
         {
@@ -70,7 +77,14 @@ export async function POST(request: NextRequest) {
       cancel_url: `${baseUrl}/pricing`,
       allow_promotion_codes: true,
       billing_address_collection: 'required',
-    })
+    }
+
+    // If user is logged in, prefill their email
+    if (user?.email) {
+      sessionConfig.customer_email = user.email
+    }
+
+    const session = await stripe.checkout.sessions.create(sessionConfig)
 
     return NextResponse.json({ url: session.url })
   } catch (error) {
