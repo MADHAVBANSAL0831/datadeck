@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 
 interface SessionData {
@@ -21,19 +20,28 @@ interface SessionData {
 }
 
 export default function SuccessPage() {
-  const searchParams = useSearchParams()
-  const sessionId = searchParams.get('session_id')
-  const [sessionData, setSessionData] = useState<SessionData | null>(null)
+	  const [sessionId, setSessionId] = useState<string | null>(null)
+	  const [sessionData, setSessionData] = useState<SessionData | null>(null)
   const [loading, setLoading] = useState(true)
   const [isLoadingPortal, setIsLoadingPortal] = useState(false)
 
   useEffect(() => {
-    if (sessionId) {
-      fetchSessionData(sessionId)
-    } else {
-      setLoading(false)
-    }
-  }, [sessionId])
+	    // Read session ID from the browser URL on the client side
+	    try {
+	      const params = new URLSearchParams(window.location.search)
+	      const id = params.get('session_id')
+	      setSessionId(id)
+
+	      if (id) {
+	        fetchSessionData(id)
+	      } else {
+	        setLoading(false)
+	      }
+	    } catch (error) {
+	      console.error('Error reading session_id from URL:', error)
+	      setLoading(false)
+	    }
+	  }, [])
 
   const fetchSessionData = async (id: string) => {
     try {
