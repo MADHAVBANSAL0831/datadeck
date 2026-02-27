@@ -151,7 +151,7 @@ export default async function DashboardPage() {
 	        ) : lastSubscription ? (
 	          <div className="space-y-4">
 	            <p className="text-white/60">
-	              You don't have an active subscription right now.
+	              You don&apos;t have an active subscription right now.
 	            </p>
 	            <div className="mt-4 rounded-lg border border-white/10 bg-white/5 p-4 space-y-2">
 	              <p className="text-sm text-white/60">Last subscription</p>
@@ -177,7 +177,7 @@ export default async function DashboardPage() {
 	          </div>
 	        ) : (
 	          <div className="text-center py-8">
-	            <p className="text-white/60 mb-6">You don't have an active subscription yet.</p>
+	            <p className="text-white/60 mb-6">You don&apos;t have an active subscription yet.</p>
 	            <Link
 	              href="/pricing"
 	              className="inline-block py-3 px-8 bg-gradient-to-r from-teal-600 to-teal-500 text-white font-semibold rounded-xl hover:from-teal-500 hover:to-teal-400 transition-all"

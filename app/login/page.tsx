@@ -108,9 +108,9 @@ export default function LoginPage() {
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-white/10"></div>
             </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-slate-900 text-white/60">Don't have an account?</span>
-            </div>
+	            <div className="relative flex justify-center text-sm">
+	              <span className="px-2 bg-slate-900 text-white/60">Don&apos;t have an account?</span>
+	            </div>
           </div>
 
           {/* Sign Up Link */}

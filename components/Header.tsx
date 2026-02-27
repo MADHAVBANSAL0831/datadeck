@@ -6,12 +6,13 @@ import { createClient } from '@/lib/supabase/client'
 import { User } from '@supabase/supabase-js'
 import UserMenu from './UserMenu'
 
-export default function Header() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [user, setUser] = useState<User | null>(null)
-  const supabase = createClient()
+const supabase = createClient()
 
-  useEffect(() => {
+export default function Header() {
+	  const [isMenuOpen, setIsMenuOpen] = useState(false)
+	  const [user, setUser] = useState<User | null>(null)
+
+	  useEffect(() => {
     // Get initial user
     supabase.auth.getUser().then(({ data: { user } }) => {
       setUser(user)
@@ -24,8 +25,8 @@ export default function Header() {
       setUser(session?.user ?? null)
     })
 
-    return () => subscription.unsubscribe()
-  }, [])
+	    return () => subscription.unsubscribe()
+	  }, [])
 
   return (
     <header className="sticky top-0 z-50 bg-slate-950/90 backdrop-blur-lg border-b border-teal-500/20">

@@ -44,19 +44,19 @@ export default function FixSubscriptionPage() {
 
   return (
     <div className="min-h-screen px-6 py-12 bg-slate-950">
-      <div className="max-w-2xl mx-auto">
-        <h1 className="text-3xl font-bold text-white mb-4">Fix Missing Subscription</h1>
-        <p className="text-white/60 mb-8">
-          If you completed a payment but it's not showing in your dashboard, enter your Stripe session ID below to manually save it.
-        </p>
+	      <div className="max-w-2xl mx-auto">
+	        <h1 className="text-3xl font-bold text-white mb-4">Fix Missing Subscription</h1>
+	        <p className="text-white/60 mb-8">
+	          If you completed a payment but it&apos;s not showing in your dashboard, enter your Stripe session ID below to manually save it.
+	        </p>
 
         <div className="bg-white/5 border border-teal-500/20 rounded-xl p-6 mb-6">
-          <h2 className="text-xl font-semibold text-white mb-4">How to find your Session ID:</h2>
+	          <h2 className="text-xl font-semibold text-white mb-4">How to find your Session ID:</h2>
           <ol className="text-white/70 space-y-2 text-sm list-decimal list-inside">
             <li>Check your email for the Stripe receipt</li>
-            <li>Or look at the URL after payment - it should have <code className="bg-white/10 px-2 py-1 rounded">?session_id=cs_...</code></li>
-            <li>Copy the entire session ID (starts with "cs_")</li>
-            <li>Paste it below and click "Fix Subscription"</li>
+	            <li>Or look at the URL after payment - it should have <code className="bg-white/10 px-2 py-1 rounded">?session_id=cs_...</code></li>
+	            <li>Copy the entire session ID (starts with &quot;cs_&quot;)</li>
+	            <li>Paste it below and click &quot;Fix Subscription&quot;</li>
           </ol>
         </div>
 
@@ -101,11 +101,11 @@ export default function FixSubscriptionPage() {
           <a href="/dashboard" className="text-teal-400 hover:text-teal-300">← Back to Dashboard</a>
         </div>
 
-        <div className="mt-8 bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-6">
-          <h3 className="text-lg font-semibold text-yellow-400 mb-2">Alternative: Make a New Payment</h3>
-          <p className="text-white/60 text-sm mb-4">
-            If you can't find your session ID, you can simply make a new test payment and it will work automatically.
-          </p>
+	        <div className="mt-8 bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-6">
+	          <h3 className="text-lg font-semibold text-yellow-400 mb-2">Alternative: Make a New Payment</h3>
+	          <p className="text-white/60 text-sm mb-4">
+	            If you can&apos;t find your session ID, you can simply make a new test payment and it will work automatically.
+	          </p>
           <a
             href="/pricing"
             className="inline-block px-6 py-2 bg-yellow-500/20 border border-yellow-500/30 text-yellow-400 font-medium rounded-lg hover:bg-yellow-500/30 transition-all"

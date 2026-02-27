@@ -46,16 +46,16 @@ export default async function DebugSubscriptionPage() {
           </pre>
         </div>
 
-        <div className="bg-white/5 border border-teal-500/20 rounded-xl p-6">
-          <h2 className="text-xl font-semibold text-white mb-4">What to Check:</h2>
-          <ul className="text-white/70 space-y-2 text-sm">
-            <li>✅ <strong>user_id:</strong> Should match your user ID above</li>
-            <li>✅ <strong>stripe_customer_id:</strong> Should exist (starts with "cus_")</li>
-            <li>✅ <strong>stripe_subscription_id:</strong> Should exist (starts with "sub_")</li>
-            <li>✅ <strong>plan_name:</strong> Should show your plan</li>
-            <li>✅ <strong>status:</strong> Should be "active" or "trialing"</li>
-          </ul>
-        </div>
+	        <div className="bg-white/5 border border-teal-500/20 rounded-xl p-6">
+	          <h2 className="text-xl font-semibold text-white mb-4">What to Check:</h2>
+	          <ul className="text-white/70 space-y-2 text-sm">
+	            <li>✅ <strong>user_id:</strong> Should match your user ID above</li>
+	            <li>✅ <strong>stripe_customer_id:</strong> Should exist (starts with &quot;cus_&quot;)</li>
+	            <li>✅ <strong>stripe_subscription_id:</strong> Should exist (starts with &quot;sub_&quot;)</li>
+	            <li>✅ <strong>plan_name:</strong> Should show your plan</li>
+	            <li>✅ <strong>status:</strong> Should be &quot;active&quot; or &quot;trialing&quot;</li>
+	          </ul>
+	        </div>
 
         <div className="mt-6">
           <a href="/dashboard" className="text-teal-400 hover:text-teal-300">← Back to Dashboard</a>
