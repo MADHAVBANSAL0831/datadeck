@@ -39,11 +39,14 @@ export async function POST(request: NextRequest) {
     const { sessionId } = await request.json()
 
     if (!sessionId) {
+      console.error('❌ No sessionId provided')
       return NextResponse.json(
         { error: 'Session ID is required' },
         { status: 400 }
       )
     }
+
+    console.log('📝 Processing session:', sessionId)
 
     // Get authenticated user
     const supabase = await createClient()
@@ -52,16 +55,28 @@ export async function POST(request: NextRequest) {
     } = await supabase.auth.getUser()
 
     if (!user) {
+      console.error('❌ User not authenticated')
       return NextResponse.json(
         { error: 'Not authenticated' },
         { status: 401 }
       )
     }
 
+    console.log('✅ User authenticated:', user.email)
+
     // Retrieve the checkout session from Stripe
     const session = await stripe.checkout.sessions.retrieve(sessionId)
 
+    console.log('📦 Session retrieved:', {
+      id: session.id,
+      mode: session.mode,
+      customer: session.customer,
+      payment_status: session.payment_status,
+      subscription: session.subscription
+    })
+
     if (!session.customer) {
+      console.error('❌ No customer in session. Session details:', JSON.stringify(session, null, 2))
       return NextResponse.json(
         { error: 'No customer found in session' },
         { status: 400 }
