@@ -52,16 +52,24 @@ export default function SuccessPage() {
 
         // Save subscription to database
         try {
-          await fetch('/api/save-subscription', {
+          const saveResponse = await fetch('/api/save-subscription', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({ sessionId: id }),
           })
-          console.log('✅ Subscription saved to database')
+
+          if (saveResponse.ok) {
+            const saveData = await saveResponse.json()
+            console.log('✅ Subscription saved to database:', saveData)
+          } else {
+            const errorData = await saveResponse.json()
+            console.error('❌ Failed to save subscription:', errorData)
+            console.error('Status:', saveResponse.status)
+          }
         } catch (saveError) {
-          console.error('Error saving subscription:', saveError)
+          console.error('❌ Error saving subscription:', saveError)
         }
       }
     } catch (error) {

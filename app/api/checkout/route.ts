@@ -84,6 +84,12 @@ export async function POST(request: NextRequest) {
       sessionConfig.customer_email = user.email
     }
 
+    // For one-time payments, explicitly tell Stripe to create a customer
+    // This ensures session.customer exists when we save to database
+    if (priceConfig.mode === 'payment') {
+      sessionConfig.customer_creation = 'always'
+    }
+
     const session = await stripe.checkout.sessions.create(sessionConfig)
 
     return NextResponse.json({ url: session.url })
